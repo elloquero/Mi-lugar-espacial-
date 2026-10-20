@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores rositas para mi niña bonica✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 100%);
+            color: #5a3e42;
+            overflow-x: hidden;
+        }
+        .romantic-font {
+            font-family: 'Caveat', cursive;
+        }
+        
+        /* Falling items animation for hearts and flowers */
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1.1);
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(0.8);
+                opacity: 0.1;
+            }
+        }
+        .falling-item {
+            position: fixed;
+            top: -50px;
+            z-index: 10;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        /* Subtle tree pulse animation */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.015); }
+        }
+        .heart-tree {
+            animation: subtle-pulse 4s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-pink-200">
+
+    <div id="falling-container" class="fixed inset-0 overflow-hidden pointer-events-none z-10"></div>
+
+    <main class="flex-grow flex flex-col lg:flex-row items-center justify-center p-6 lg:p-12 max-w-7xl mx-auto w-full z-20 gap-8 lg:gap-12">
+        
+        <!-- Left Column: Messages and Counter -->
+        <div class="flex flex-col justify-center space-y-6 lg:w-1/2 text-left">
+    <!-- Text area on the left side -->
+    <div class="content-left text-center md:text-left z-10 w-full max-w-lg">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-pink-900 leading-tight mb-4 tracking-tight drop-shadow-sm">
+        Flores rositas para mi niña bonica✨
+      </h1>
+
+      <p class="text-lg sm:text-xl text-pink-800 font-medium mb-3 italic">
+        Como vos sos mi lugar especial hice este lugar especial para vos
+      </p>
+
+      <p class="text-base sm:text-lg text-pink-700 font-normal mb-5">
+        Mientras más pasa el tiempo más te amo culona
+      </p>
+
+      <div class="text-2xl sm:text-3xl font-bold text-pink-900 tracking-wider mb-8 drop-shadow-sm">
+        — نحبك —
+      </div>
+            </div>
+
+            <!-- Counter Box -->
+            <div class="bg-white/70 backdrop-blur-md p-6 rounded-3xl shadow-xl border border-pink-100/80">
+                <p class="text-sm sm:text-base font-semibold text-pink-800 mb-2 uppercase tracking-wider">
+                    Te amo desde...
+                </p>
+                <div id="counter" class="text-xl sm:text-2xl font-bold text-gray-800 flex flex-wrap gap-2 items-baseline">
+                    <span class="text-pink-600 text-3xl sm:text-4xl font-extrabold mr-1">∞</span>
+                    <span class="text-sm font-normal text-gray-600 mr-2">días</span>
+                    <span class="text-pink-600 text-3xl sm:text-4xl font-extrabold mr-1">∞</span>
+                    <span class="text-sm font-normal text-gray-600 mr-2">horas</span>
+                    <span class="text-pink-600 text-3xl sm:text-4xl font-extrabold mr-1">∞</span>
+                    <span class="text-sm font-normal text-gray-600 mr-2">minutos</span>
+                    <span id="seconds" class="text-pink-600 font-extrabold text-2xl sm:text-3xl">--</span>
+                    <span class="text-sm font-normal text-gray-600">segundos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Heart Tree SVG with lower heart crown and short trunk -->
+        <div class="lg:w-1/2 flex items-center justify-center relative w-full max-w-md lg:max-w-none">
+            <div class="relative w-full aspect-square flex items-center justify-center heart-tree">
+                <svg viewBox="0 0 500 500" class="w-full h-full filter drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shorter trunk positioned lower down -->
+                    <path d="M242 500 L245 380 Q248 350 240 325 Q248 320 255 338 L258 380 L261 500 Z" fill="#6d4c41"/>
+                    <path d="M249 400 Q257 360 267 335 Q273 330 267 325 Q259 325 249 360 Z" fill="#5d4037"/>
+
+                    <!-- Group containing organic blossoms forming a very clearly defined classic heart shape -->
+                    <g id="dense-blossoms">
+                        <!-- JS will inject organic flowers -->
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-xs text-pink-700/70 z-20 font-medium">
+        Hecho con ❤️ para el amor de mi vida
+    </footer>
+
+    <script>
+        function buildDenseBlossoms() {
+            const container = document.getElementById('dense-blossoms');
+            if (!container) return;
+
+            // Classic heart equation with sharp top cleft and pronounced bottom point: (x^2 + y^2 - 1)^3 - x^2 * y^3 <= 0
+            // Centered lower down around (250, 260) with scaling factor 175
+            function isInHeart(x, y) {
+                const nx = (x - 250) / 175;
+                const ny = -(y - 260) / 175;
+                const a = nx * nx + ny * ny - 1;
+                return (a * a * a - nx * nx * ny * ny * ny) <= 0;
+            }
+
+            let blossomsHTML = '';
+            // Fine-grained grid scan to outline the classic heart silhouette clearly
+            const step = 14;
+            for (let x = 50; x <= 450; x += step) {
+                for (let y = 60; y <= 420; y += step) {
+                    // Slight organic position jitter so it doesn't look like a rigid grid
+                    const offsetX = (Math.random() - 0.5) * 11;
+                    const offsetY = (Math.random() - 0.5) * 11;
+                    const px = x + offsetX;
+                    const py = y + offsetY;
+
+                    // Probability check to leave subtle natural gaps inside the crown
+                    if (isInHeart(px, py) && Math.random() > 0.22) {
+                        const fontSize = Math.floor(Math.random() * 8) + 26; // Visible flower size
+                        const opacity = (Math.random() * 0.15 + 0.85).toFixed(2);
+                        const rotation = Math.floor(Math.random() * 360); // Random organic angle
+                        blossomsHTML += `<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" font-size="${fontSize}" opacity="${opacity}" transform="rotate(${rotation}, ${px.toFixed(1)}, ${py.toFixed(1)})" text-anchor="middle" dominant-baseline="central" style="user-select:none;">🌸</text>`;
+                    }
+                }
+            }
+            container.innerHTML = blossomsHTML;
+        }
+
+        buildDenseBlossoms();
+
+        let startDate = localStorage.getItem('startDate') || new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
+
+        function updateCounter() {
+            const start = new Date(startDate);
+            const now = new Date();
+            let diff = now - start;
+
+            if (diff < 0) diff = 0;
+
+            const secondsTotal = Math.floor(diff / 1000);
+            const seconds = secondsTotal % 60;
+
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        const fallingContainer = document.getElementById('falling-container');
+        const symbols = ['🌸', '💖', '💗', '✨', '🌸', '🌷', '💕', '🌸'];
+
+        function createFallingItem() {
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            const startLeft = Math.random() * 100;
+            const duration = Math.random() * 4 + 4;
+            const size = Math.random() * 1.5 + 1.2;
+
+            item.style.left = startLeft + 'vw';
+            item.style.fontSize = size + 'rem';
+            item.style.animationDuration = duration + 's';
+            
+            fallingContainer.appendChild(item);
+
+            setTimeout(() => {
+                item.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createFallingItem, 300);
+    </script>
+</body>
+</html>
